@@ -1,0 +1,42 @@
+# tt — Claude Code Token Tracker
+
+`tt` tracks the size of tool and subagent responses flowing into the main context while Claude Code is running. This helps you identify which tools and subagents are the worst context-bloat offenders, so you can make better decisions about how you use them.
+
+## How it works
+
+Claude Code's `PostToolUse` hook fires after every tool call. `tt record` is invoked as that hook, reads the response payload from stdin, and records its byte size to a local SQLite database. Because only responses entering the **main context** are meaningful for context budgeting, `tt` distinguishes between:
+
+- **Main context calls** — tool calls made directly by the main agent
+- **Subagent calls** — tool calls made inside a subagent (tracked but de-emphasized, since those responses are summarized before reaching the main context)
+- **Agent tool calls** — when the main agent invokes a subagent, the subagent's final output is what enters the main context, and that is recorded as a main context call
+
+## Commands
+
+```bash
+tt record   # called by the PostToolUse hook — do not run manually
+tt watch    # live feed of tool calls across all sessions
+tt log      # scrollable historical log with filtering
+tt stats    # aggregate stats by tool name (main context only)
+```
+
+### tt watch
+
+Live tail of all tool calls as they happen, across all concurrent sessions. Subagent tool calls are hidden by default (press `s` to show them dimmed).
+
+### tt log
+
+Scrollable historical log. Press `tab` to cycle time windows (24h / 48h / 7d / all), `s` to toggle subagent rows, `e` for errors-only, `j`/`k` or `↑`/`↓` to scroll, `g`/`G` for top/bottom.
+
+### tt stats
+
+Aggregate totals and averages per tool, main context only. Press `tab` to cycle time windows (24h / 48h / 7d). Auto-refreshes every 5 seconds.
+
+## Data storage
+
+All data is written to `~/.claude/token_tracker/token_tracker.db` (SQLite, WAL mode). The file is created automatically on first use. Multiple concurrent hook invocations (parallel subagents, multiple sessions) are safe.
+
+Errors encountered by `tt record` are written to an `errors` table in the same database and never surfaced to Claude Code.
+
+## Configuration
+
+See [docs/configuration.md](docs/configuration.md) for installation and hook setup instructions, including notes on using `tt` with Claude Code in the desktop GUI.
