@@ -22,7 +22,9 @@ func TestWatchSnapshot_Empty(t *testing.T) {
 		width:  testWidth,
 		height: testHeight,
 	}
-	assertGolden(t, "watch_empty", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_empty", got)
 }
 
 func TestWatchSnapshot_WithEntries(t *testing.T) {
@@ -31,7 +33,9 @@ func TestWatchSnapshot_WithEntries(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "watch_with_entries", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_with_entries", got)
 }
 
 func TestWatchSnapshot_ManyEntries(t *testing.T) {
@@ -40,7 +44,9 @@ func TestWatchSnapshot_ManyEntries(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "watch_many_entries", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_many_entries", got)
 }
 
 func TestWatchSnapshot_ShowSubOff(t *testing.T) {
@@ -50,7 +56,9 @@ func TestWatchSnapshot_ShowSubOff(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "watch_show_sub_off", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_show_sub_off", got)
 }
 
 func TestWatchSnapshot_ShowSubOn(t *testing.T) {
@@ -60,7 +68,21 @@ func TestWatchSnapshot_ShowSubOn(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "watch_show_sub_on", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_show_sub_on", got)
+}
+
+func TestWatchSnapshot_WithSummaries(t *testing.T) {
+	model := watchModel{
+		entries: entriesWithSummaries(),
+		showSub: true,
+		width:   testWidth,
+		height:  testHeight,
+	}
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "watch_with_summaries", got)
 }
 
 // Log view tests
@@ -71,7 +93,9 @@ func TestLogSnapshot_Empty(t *testing.T) {
 		width:  testWidth,
 		height: testHeight,
 	}
-	assertGolden(t, "log_empty", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_empty", got)
 }
 
 func TestLogSnapshot_WithEntries(t *testing.T) {
@@ -83,7 +107,9 @@ func TestLogSnapshot_WithEntries(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "log_with_entries", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_with_entries", got)
 }
 
 func TestLogSnapshot_ScrollTop(t *testing.T) {
@@ -95,7 +121,9 @@ func TestLogSnapshot_ScrollTop(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "log_scroll_top", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_scroll_top", got)
 }
 
 func TestLogSnapshot_ScrollMid(t *testing.T) {
@@ -107,7 +135,9 @@ func TestLogSnapshot_ScrollMid(t *testing.T) {
 		width:   testWidth,
 		height:  testHeight,
 	}
-	assertGolden(t, "log_scroll_mid", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_scroll_mid", got)
 }
 
 func TestLogSnapshot_ErrorsOnly(t *testing.T) {
@@ -118,7 +148,9 @@ func TestLogSnapshot_ErrorsOnly(t *testing.T) {
 		width:      testWidth,
 		height:     testHeight,
 	}
-	assertGolden(t, "log_errors_only", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_errors_only", got)
 }
 
 func TestLogSnapshot_Window24h(t *testing.T) {
@@ -130,7 +162,9 @@ func TestLogSnapshot_Window24h(t *testing.T) {
 		width:     testWidth,
 		height:    testHeight,
 	}
-	assertGolden(t, "log_window_24h", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_window_24h", got)
 }
 
 func TestLogSnapshot_Window7d(t *testing.T) {
@@ -142,5 +176,21 @@ func TestLogSnapshot_Window7d(t *testing.T) {
 		width:     testWidth,
 		height:    testHeight,
 	}
-	assertGolden(t, "log_window_7d", model.View())
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_window_7d", got)
+}
+
+func TestLogSnapshot_WithSummaries(t *testing.T) {
+	model := logModel{
+		entries: entriesWithSummaries(),
+		showSub: true,
+		loaded:  true,
+		offset:  0,
+		width:   testWidth,
+		height:  testHeight,
+	}
+	got := model.View()
+	assertFitsInTerminal(t, got, testHeight)
+	assertGolden(t, "log_with_summaries", got)
 }

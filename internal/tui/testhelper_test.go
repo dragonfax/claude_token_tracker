@@ -52,6 +52,31 @@ func standardEntries() []appdb.TailEntry {
 	}
 }
 
+func makeToolCallWithSummary(id, offset int64, sessionID, toolName string, bytes int64, isMain bool, summary string) appdb.TailEntry {
+	e := makeToolCall(id, offset, sessionID, toolName, bytes, isMain)
+	e.InputSummary = summary
+	return e
+}
+
+func entriesWithSummaries() []appdb.TailEntry {
+	return []appdb.TailEntry{
+		makeToolCallWithSummary(1, 0, "aabbccdd-1111-2222-3333-444455556666", "Read", 1024, true, "reading /path/to/some/important/file.go"),
+		makeToolCall(2, 10, "aabbccdd-1111-2222-3333-444455556666", "Grep", 2048, true),
+		makeToolCallWithSummary(3, 20, "aabbccdd-1111-2222-3333-444455556666", "Write", 512, true, "writing updated implementation to disk"),
+		makeToolCall(4, 30, "bbccddee-1111-2222-3333-444455556666", "Bash", 768, false),
+		makeError(5, 40, "aabbccdd-1111-2222-3333-444455556666", "hook", "permission denied"),
+	}
+}
+
+func assertFitsInTerminal(t *testing.T, view string, height int) {
+	t.Helper()
+	lines := strings.Split(view, "\n")
+	if len(lines) > height {
+		t.Errorf("View() output has %d lines but terminal height is %d — renderer will drop %d lines from top (header will disappear)",
+			len(lines), height, len(lines)-height)
+	}
+}
+
 func makeNEntries(n int) []appdb.TailEntry {
 	entries := make([]appdb.TailEntry, n)
 	for i := range entries {

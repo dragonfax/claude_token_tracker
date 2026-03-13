@@ -206,9 +206,12 @@ func (m logModel) View() string {
 		maxLines = 10
 	}
 
-	end := m.offset + maxLines
-	if end > len(filtered) {
-		end = len(filtered)
+	// Compute end offset accounting for multi-line entries
+	end := m.offset
+	linesBudget := maxLines
+	for end < len(filtered) && linesBudget > 0 {
+		linesBudget -= entryLineCount(filtered[end])
+		end++
 	}
 
 	visible := filtered
@@ -218,10 +221,12 @@ func (m logModel) View() string {
 		visible = nil
 	}
 
+	renderedLines := 0
 	for _, e := range visible {
 		sb.WriteString(formatEntry(e, m.showSub) + "\n")
+		renderedLines += entryLineCount(e)
 	}
-	for i := len(visible); i < maxLines; i++ {
+	for i := renderedLines; i < maxLines; i++ {
 		sb.WriteString("\n")
 	}
 
