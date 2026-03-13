@@ -3,6 +3,7 @@ package tui
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -98,7 +99,7 @@ func (m statsModel) View() string {
 	// Column header
 	sb.WriteString(styleDim.Render(fmt.Sprintf(" %-42s  %8s  %10s  %10s\n",
 		"Tool", "Calls", "Total", "Avg/call")))
-	sb.WriteString(styleDim.Render(" " + strings.Repeat("─", max(m.width-2, 76))) + "\n")
+	sb.WriteString(styleDim.Render(" "+strings.Repeat("─", max(m.width-2, 76))) + "\n")
 
 	if len(m.rows) == 0 {
 		sb.WriteString(styleDim.Render(" no data for this window\n"))
@@ -123,12 +124,12 @@ func (m statsModel) View() string {
 func RunStats() {
 	dbPath, err := appdb.DefaultDBPath()
 	if err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		return
 	}
 	db, err := appdb.Open(dbPath)
 	if err != nil {
-		fmt.Printf("error opening db: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error opening db: %v\n", err)
 		return
 	}
 	defer db.Close()
@@ -136,6 +137,6 @@ func RunStats() {
 	m := statsModel{db: db}
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 	}
 }

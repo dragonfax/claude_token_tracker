@@ -3,6 +3,7 @@ package tui
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -13,17 +14,17 @@ import (
 var logWindows = []string{"24h", "48h", "7d", "all"}
 
 type logModel struct {
-	db          *sql.DB
-	entries     []appdb.TailEntry
-	lastID      int64
-	lastErrID   int64
-	showSub     bool
-	errorsOnly  bool
-	windowIdx   int
-	offset      int // scroll offset (top visible line)
-	width       int
-	height      int
-	loaded      bool
+	db         *sql.DB
+	entries    []appdb.TailEntry
+	lastID     int64
+	lastErrID  int64
+	showSub    bool
+	errorsOnly bool
+	windowIdx  int
+	offset     int // scroll offset (top visible line)
+	width      int
+	height     int
+	loaded     bool
 }
 
 type logDataMsg struct {
@@ -179,7 +180,6 @@ func (m logModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m logModel) View() string {
 	var sb strings.Builder
 
-	window := logWindows[m.windowIdx]
 	var tabStr strings.Builder
 	for i, w := range logWindows {
 		tabStr.WriteString(tabLabel(w, i == m.windowIdx))
@@ -196,8 +196,6 @@ func (m logModel) View() string {
 	if m.errorsOnly {
 		errToggle = styleSelected.Render("e:errors-only")
 	}
-	_ = window
-
 	header := styleHeader.Render("tt log — historical tool calls")
 	sb.WriteString(fmt.Sprintf("%s  %s  %s %s\n", header, tabStr.String(), subToggle, errToggle))
 	sb.WriteString(styleSep.Render(strings.Repeat("─", max(m.width, 80))) + "\n")
@@ -236,12 +234,12 @@ func (m logModel) View() string {
 func RunLog(args []string) {
 	dbPath, err := appdb.DefaultDBPath()
 	if err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		return
 	}
 	db, err := appdb.Open(dbPath)
 	if err != nil {
-		fmt.Printf("error opening db: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error opening db: %v\n", err)
 		return
 	}
 	defer db.Close()
@@ -249,6 +247,6 @@ func RunLog(args []string) {
 	m := logModel{db: db}
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 	}
 }

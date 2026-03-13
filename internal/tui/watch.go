@@ -3,6 +3,7 @@ package tui
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -11,14 +12,14 @@ import (
 )
 
 type watchModel struct {
-	db         *sql.DB
-	entries    []appdb.TailEntry
-	lastID     int64
-	lastErrID  int64
-	showSub    bool
-	err        string
-	width      int
-	height     int
+	db        *sql.DB
+	entries   []appdb.TailEntry
+	lastID    int64
+	lastErrID int64
+	showSub   bool
+	err       string
+	width     int
+	height    int
 }
 
 type watchTickMsg struct{}
@@ -138,12 +139,12 @@ func (m watchModel) View() string {
 func RunWatch() {
 	dbPath, err := appdb.DefaultDBPath()
 	if err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		return
 	}
 	db, err := appdb.Open(dbPath)
 	if err != nil {
-		fmt.Printf("error opening db: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error opening db: %v\n", err)
 		return
 	}
 	defer db.Close()
@@ -151,13 +152,6 @@ func RunWatch() {
 	m := watchModel{db: db}
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("error: %v\n", err)
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 	}
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

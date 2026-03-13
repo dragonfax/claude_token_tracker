@@ -51,11 +51,12 @@ func formatEntry(e appdb.TailEntry, showSub bool) string {
 	return rendered
 }
 
-func truncate(s string, max int) string {
-	if len(s) <= max {
+func truncate(s string, n int) string {
+	runes := []rune(s)
+	if len(runes) <= n {
 		return s
 	}
-	return s[:max-1] + "…"
+	return string(runes[:n-1]) + "…"
 }
 
 func sinceTime(window string) time.Time {

@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 )
 
@@ -87,9 +88,9 @@ func InsertError(db *sql.DB, e AppError) error {
 
 // TailEntry is a unified row for the watch/log views.
 type TailEntry struct {
-	ID            int64
-	RecordedAt    time.Time
-	IsError       bool
+	ID         int64
+	RecordedAt time.Time
+	IsError    bool
 	// tool call fields
 	SessionID     string
 	AgentID       string
@@ -134,7 +135,11 @@ func TailSince(db *sql.DB, afterID, afterErrID int64, showSub bool, since time.T
 		if err := rows.Scan(&e.ID, &recStr, &e.SessionID, &e.AgentID, &e.ToolName, &e.InputSummary, &e.ResponseBytes, &isMain); err != nil {
 			return nil, err
 		}
-		e.RecordedAt, _ = time.Parse(time.RFC3339Nano, recStr)
+		var err2 error
+		e.RecordedAt, err2 = time.Parse(time.RFC3339Nano, recStr)
+		if err2 != nil {
+			return nil, fmt.Errorf("parse recorded_at %q: %w", recStr, err2)
+		}
 		e.IsMainContext = isMain == 1
 		entries = append(entries, e)
 	}
@@ -156,7 +161,11 @@ func TailSince(db *sql.DB, afterID, afterErrID int64, showSub bool, since time.T
 		if err := errRows.Scan(&e.ID, &recStr, &e.SessionID, &e.Source, &e.Message); err != nil {
 			return nil, err
 		}
-		e.RecordedAt, _ = time.Parse(time.RFC3339Nano, recStr)
+		var err2 error
+		e.RecordedAt, err2 = time.Parse(time.RFC3339Nano, recStr)
+		if err2 != nil {
+			return nil, fmt.Errorf("parse error recorded_at %q: %w", recStr, err2)
+		}
 		e.IsError = true
 		entries = append(entries, e)
 	}

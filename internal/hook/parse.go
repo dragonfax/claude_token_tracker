@@ -139,8 +139,9 @@ func compactJSON(raw json.RawMessage) string {
 func truncateSummary(s string) string {
 	// Normalize whitespace
 	s = strings.Join(strings.Fields(s), " ")
-	if len(s) <= maxSummaryLen {
+	runes := []rune(s)
+	if len(runes) <= maxSummaryLen {
 		return s
 	}
-	return s[:maxSummaryLen-1] + "…"
+	return string(runes[:maxSummaryLen-1]) + "…"
 }
