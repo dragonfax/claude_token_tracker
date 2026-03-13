@@ -2,6 +2,33 @@
 
 `tt` tracks the size of tool and subagent responses flowing into the main context while Claude Code is running. This helps you identify which tools and subagents are the worst context-bloat offenders, so you can make better decisions about how you use them.
 
+## Quick Install
+
+**Option 1 — curl one-liner** (installs binary + configures hook automatically):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dragonfax/claude_token_tracker/main/install.sh | sh
+```
+
+Installs `tt` to `~/.local/bin/tt` and adds the PostToolUse hook to `~/.claude/settings.json`.
+
+**Option 2 — Claude plugin** (hook wired automatically when plugin is enabled):
+
+```
+/plugin install https://github.com/dragonfax/claude_token_tracker/tree/main/plugin
+```
+
+The plugin configures the PostToolUse hook. You still need the `tt` binary (install via Option 1 or `go install`).
+
+**Option 3 — Go install** (for contributors):
+
+```sh
+go install github.com/reshophq/token-tracker/cmd/tt@latest
+tt install-hook   # adds the hook to ~/.claude/settings.json
+```
+
+See [docs/configuration.md](docs/configuration.md) for full setup details.
+
 ## How it works
 
 Claude Code's `PostToolUse` hook fires after every tool call. `tt record` is invoked as that hook, reads the response payload from stdin, and records its byte size to a local SQLite database. Because only responses entering the **main context** are meaningful for context budgeting, `tt` distinguishes between:
