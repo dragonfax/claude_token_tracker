@@ -112,7 +112,7 @@ func (m watchModel) View() string {
 	sb.WriteString(fmt.Sprintf("%s  %s\n", header, subToggle))
 	sb.WriteString(styleSep.Render(strings.Repeat("─", max(m.width, 80))) + "\n")
 
-	// Show last N lines that fit in terminal
+	// Show last N lines that fit in terminal, anchored to the bottom
 	maxLines := m.height - 4
 	if maxLines < 1 {
 		maxLines = 10
@@ -121,14 +121,14 @@ func (m watchModel) View() string {
 	if len(m.entries) > maxLines {
 		start = len(m.entries) - maxLines
 	}
-	for _, e := range m.entries[start:] {
-		sb.WriteString(formatEntry(e, m.showSub) + "\n")
-	}
+	visible := m.entries[start:]
 
-	// Pad to fill screen
-	lines := len(m.entries[start:])
-	for i := lines; i < maxLines; i++ {
+	// Pad top so entries are always anchored at the bottom
+	for i := len(visible); i < maxLines; i++ {
 		sb.WriteString("\n")
+	}
+	for _, e := range visible {
+		sb.WriteString(formatEntry(e, m.showSub) + "\n")
 	}
 
 	sb.WriteString(styleSep.Render(strings.Repeat("─", max(m.width, 80))) + "\n")
@@ -149,7 +149,7 @@ func RunWatch() {
 	}
 	defer db.Close()
 
-	m := watchModel{db: db}
+	m := watchModel{db: db, height: 24}
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
