@@ -10,11 +10,23 @@ go install github.com/reshophq/token-tracker/cmd/tt@latest
 go build -o ~/bin/tt ./cmd/tt
 ```
 
-Make sure the install location is on your `PATH`.
+Note the full path to the installed binary — you'll need it for hook configuration (see below).
+
+## Compatibility
+
+| Environment | Supported | Notes |
+|---|---|---|
+| Claude Code (CLI) | Yes | Full support |
+| Claude Code in the desktop GUI | Yes | Use absolute path in hook config (see below) |
+| Claude.ai desktop chat app | No | No hooks system |
+
+The Claude.ai desktop chat app is a separate product from Claude Code and does not have a hooks system. Only Claude Code (whether run from the terminal or embedded in the desktop GUI) supports hooks.
 
 ## Hook configuration
 
-Add the PostToolUse hook to a project's `.claude/settings.json`:
+### Claude Code CLI
+
+When running Claude Code from the terminal, `tt` just needs to be on your shell's `PATH`. Add the PostToolUse hook to a project's `.claude/settings.json`:
 
 ```json
 {
@@ -34,11 +46,35 @@ Add the PostToolUse hook to a project's `.claude/settings.json`:
 }
 ```
 
-The `matcher` field being empty means it fires for every tool call.
+### Claude Code in the desktop GUI
+
+Desktop apps on macOS launch with a minimal environment that does not source your shell configuration, so `tt` may not be on the PATH the desktop app uses. Use the **full absolute path** to the binary instead:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/YOUR_USERNAME/bin/tt record"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Replace `/Users/YOUR_USERNAME/bin/tt` with the actual path where you installed the binary. Using the absolute path works correctly in both the CLI and desktop GUI, so it is the safest choice if you use both.
+
+The `matcher` field being empty means the hook fires for every tool call.
 
 ## Global configuration
 
-Once tested and stable, move the hook entry to `~/.claude/settings.json` to apply it across all projects.
+Once tested and stable, move the hook entry to `~/.claude/settings.json` to apply it across all projects and both the CLI and desktop GUI.
 
 ## Data storage
 
