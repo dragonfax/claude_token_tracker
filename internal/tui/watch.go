@@ -117,14 +117,22 @@ func (m watchModel) View() string {
 	if maxLines < 1 {
 		maxLines = 10
 	}
-	start := 0
-	if len(m.entries) > maxLines {
-		start = len(m.entries) - maxLines
+
+	// Find how many entries fit from the bottom, accounting for multi-line entries
+	totalLines := 0
+	start := len(m.entries)
+	for start > 0 {
+		cost := entryLineCount(m.entries[start-1])
+		if totalLines+cost > maxLines {
+			break
+		}
+		totalLines += cost
+		start--
 	}
 	visible := m.entries[start:]
 
-	// Pad top so entries are always anchored at the bottom
-	for i := len(visible); i < maxLines; i++ {
+	// Pad top so entries are anchored at the bottom
+	for i := totalLines; i < maxLines; i++ {
 		sb.WriteString("\n")
 	}
 	for _, e := range visible {

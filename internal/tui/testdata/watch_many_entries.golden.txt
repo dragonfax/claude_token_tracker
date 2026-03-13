@@ -1,0 +1,40 @@
+tt watch — live tool call feed  [s: show sub]
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ 14:31:10  aabbccdd  [main]  Tool15                                       15.0 KB
+ 14:31:15  aabbccdd  [main]  Tool16                                       16.0 KB
+ 14:31:20  aabbccdd  [main]  Tool17                                       17.0 KB
+ 14:31:25  aabbccdd  [main]  Tool18                                       18.0 KB
+ 14:31:30  aabbccdd  [main]  Tool19                                       19.0 KB
+ 14:31:35  aabbccdd  [main]  Tool20                                       20.0 KB
+ 14:31:40  aabbccdd  [main]  Tool21                                       21.0 KB
+ 14:31:45  aabbccdd  [main]  Tool22                                       22.0 KB
+ 14:31:50  aabbccdd  [main]  Tool23                                       23.0 KB
+ 14:31:55  aabbccdd  [main]  Tool24                                       24.0 KB
+ 14:32:00  aabbccdd  [main]  Tool25                                       25.0 KB
+ 14:32:05  aabbccdd  [main]  Tool26                                       26.0 KB
+ 14:32:10  aabbccdd  [main]  Tool27                                       27.0 KB
+ 14:32:15  aabbccdd  [main]  Tool28                                       28.0 KB
+ 14:32:20  aabbccdd  [main]  Tool29                                       29.0 KB
+ 14:32:25  aabbccdd  [main]  Tool30                                       30.0 KB
+ 14:32:30  aabbccdd  [main]  Tool31                                       31.0 KB
+ 14:32:35  aabbccdd  [main]  Tool32                                       32.0 KB
+ 14:32:40  aabbccdd  [main]  Tool33                                       33.0 KB
+ 14:32:45  aabbccdd  [main]  Tool34                                       34.0 KB
+ 14:32:50  aabbccdd  [main]  Tool35                                       35.0 KB
+ 14:32:55  aabbccdd  [main]  Tool36                                       36.0 KB
+ 14:33:00  aabbccdd  [main]  Tool37                                       37.0 KB
+ 14:33:05  aabbccdd  [main]  Tool38                                       38.0 KB
+ 14:33:10  aabbccdd  [main]  Tool39                                       39.0 KB
+ 14:33:15  aabbccdd  [main]  Tool40                                       40.0 KB
+ 14:33:20  aabbccdd  [main]  Tool41                                       41.0 KB
+ 14:33:25  aabbccdd  [main]  Tool42                                       42.0 KB
+ 14:33:30  aabbccdd  [main]  Tool43                                       43.0 KB
+ 14:33:35  aabbccdd  [main]  Tool44                                       44.0 KB
+ 14:33:40  aabbccdd  [main]  Tool45                                       45.0 KB
+ 14:33:45  aabbccdd  [main]  Tool46                                       46.0 KB
+ 14:33:50  aabbccdd  [main]  Tool47                                       47.0 KB
+ 14:33:55  aabbccdd  [main]  Tool48                                       48.0 KB
+ 14:34:00  aabbccdd  [main]  Tool49                                       49.0 KB
+ 14:34:05  aabbccdd  [main]  Tool50                                       50.0 KB
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ q quit    s toggle subagent calls

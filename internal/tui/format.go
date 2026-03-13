@@ -51,6 +51,13 @@ func formatEntry(e appdb.TailEntry, showSub bool) string {
 	return rendered
 }
 
+func entryLineCount(e appdb.TailEntry) int {
+	if e.InputSummary != "" {
+		return 2
+	}
+	return 1
+}
+
 func truncate(s string, n int) string {
 	runes := []rune(s)
 	if len(runes) <= n {

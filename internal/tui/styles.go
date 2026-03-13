@@ -3,7 +3,7 @@ package tui
 import "github.com/charmbracelet/lipgloss"
 
 var (
-	styleHeader   = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("12"))
+	styleHeader   = lipgloss.NewStyle().Bold(true)
 	styleDim      = lipgloss.NewStyle().Foreground(lipgloss.Color("8"))
 	styleError    = lipgloss.NewStyle().Foreground(lipgloss.Color("9")).Bold(true)
 	styleMain     = lipgloss.NewStyle().Foreground(lipgloss.Color("15"))
