@@ -1,0 +1,40 @@
+[1mtt watch — live tool call feed[0m  [90m[s: show sub][0m
+[90m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[97m 14:31:10  aabbccdd  [main]  Tool15                                    [96m   15.0 KB[0m[0m
+[97m 14:31:15  aabbccdd  [main]  Tool16                                    [96m   16.0 KB[0m[0m
+[97m 14:31:20  aabbccdd  [main]  Tool17                                    [96m   17.0 KB[0m[0m
+[97m 14:31:25  aabbccdd  [main]  Tool18                                    [96m   18.0 KB[0m[0m
+[97m 14:31:30  aabbccdd  [main]  Tool19                                    [96m   19.0 KB[0m[0m
+[97m 14:31:35  aabbccdd  [main]  Tool20                                    [96m   20.0 KB[0m[0m
+[97m 14:31:40  aabbccdd  [main]  Tool21                                    [96m   21.0 KB[0m[0m
+[97m 14:31:45  aabbccdd  [main]  Tool22                                    [96m   22.0 KB[0m[0m
+[97m 14:31:50  aabbccdd  [main]  Tool23                                    [96m   23.0 KB[0m[0m
+[97m 14:31:55  aabbccdd  [main]  Tool24                                    [96m   24.0 KB[0m[0m
+[97m 14:32:00  aabbccdd  [main]  Tool25                                    [96m   25.0 KB[0m[0m
+[97m 14:32:05  aabbccdd  [main]  Tool26                                    [96m   26.0 KB[0m[0m
+[97m 14:32:10  aabbccdd  [main]  Tool27                                    [96m   27.0 KB[0m[0m
+[97m 14:32:15  aabbccdd  [main]  Tool28                                    [96m   28.0 KB[0m[0m
+[97m 14:32:20  aabbccdd  [main]  Tool29                                    [96m   29.0 KB[0m[0m
+[97m 14:32:25  aabbccdd  [main]  Tool30                                    [96m   30.0 KB[0m[0m
+[97m 14:32:30  aabbccdd  [main]  Tool31                                    [96m   31.0 KB[0m[0m
+[97m 14:32:35  aabbccdd  [main]  Tool32                                    [96m   32.0 KB[0m[0m
+[97m 14:32:40  aabbccdd  [main]  Tool33                                    [96m   33.0 KB[0m[0m
+[97m 14:32:45  aabbccdd  [main]  Tool34                                    [96m   34.0 KB[0m[0m
+[97m 14:32:50  aabbccdd  [main]  Tool35                                    [96m   35.0 KB[0m[0m
+[97m 14:32:55  aabbccdd  [main]  Tool36                                    [96m   36.0 KB[0m[0m
+[97m 14:33:00  aabbccdd  [main]  Tool37                                    [96m   37.0 KB[0m[0m
+[97m 14:33:05  aabbccdd  [main]  Tool38                                    [96m   38.0 KB[0m[0m
+[97m 14:33:10  aabbccdd  [main]  Tool39                                    [96m   39.0 KB[0m[0m
+[97m 14:33:15  aabbccdd  [main]  Tool40                                    [96m   40.0 KB[0m[0m
+[97m 14:33:20  aabbccdd  [main]  Tool41                                    [96m   41.0 KB[0m[0m
+[97m 14:33:25  aabbccdd  [main]  Tool42                                    [96m   42.0 KB[0m[0m
+[97m 14:33:30  aabbccdd  [main]  Tool43                                    [96m   43.0 KB[0m[0m
+[97m 14:33:35  aabbccdd  [main]  Tool44                                    [96m   44.0 KB[0m[0m
+[97m 14:33:40  aabbccdd  [main]  Tool45                                    [96m   45.0 KB[0m[0m
+[97m 14:33:45  aabbccdd  [main]  Tool46                                    [96m   46.0 KB[0m[0m
+[97m 14:33:50  aabbccdd  [main]  Tool47                                    [96m   47.0 KB[0m[0m
+[97m 14:33:55  aabbccdd  [main]  Tool48                                    [96m   48.0 KB[0m[0m
+[97m 14:34:00  aabbccdd  [main]  Tool49                                    [96m   49.0 KB[0m[0m
+[97m 14:34:05  aabbccdd  [main]  Tool50                                    [96m   50.0 KB[0m[0m
+[90m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[90m q quit    s toggle subagent calls[0m

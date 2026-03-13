@@ -1,0 +1,40 @@
+[1mtt log — historical tool calls[0m  [1;4;4m[[0m[1;4;4m2[0m[1;4;4m4[0m[1;4;4mh[0m[1;4;4m][0m  48h   7d   all   [1;4;4ms[0m[1;4;4m:[0m[1;4;4ms[0m[1;4;4mu[0m[1;4;4mb[0m [90me:errors[0m
+[90m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[97m 14:30:00  aabbccdd  [main]  Tool01                                    [96m    1.0 KB[0m[0m
+[97m 14:30:05  aabbccdd  [main]  Tool02                                    [96m    2.0 KB[0m[0m
+[97m 14:30:10  aabbccdd  [main]  Tool03                                    [96m    3.0 KB[0m[0m
+[97m 14:30:15  aabbccdd  [main]  Tool04                                    [96m    4.0 KB[0m[0m
+[97m 14:30:20  aabbccdd  [main]  Tool05                                    [96m    5.0 KB[0m[0m
+[97m 14:30:25  aabbccdd  [main]  Tool06                                    [96m    6.0 KB[0m[0m
+[97m 14:30:30  aabbccdd  [main]  Tool07                                    [96m    7.0 KB[0m[0m
+[97m 14:30:35  aabbccdd  [main]  Tool08                                    [96m    8.0 KB[0m[0m
+[97m 14:30:40  aabbccdd  [main]  Tool09                                    [96m    9.0 KB[0m[0m
+[97m 14:30:45  aabbccdd  [main]  Tool10                                    [96m   10.0 KB[0m[0m
+[97m 14:30:50  aabbccdd  [main]  Tool11                                    [96m   11.0 KB[0m[0m
+[97m 14:30:55  aabbccdd  [main]  Tool12                                    [96m   12.0 KB[0m[0m
+[97m 14:31:00  aabbccdd  [main]  Tool13                                    [96m   13.0 KB[0m[0m
+[97m 14:31:05  aabbccdd  [main]  Tool14                                    [96m   14.0 KB[0m[0m
+[97m 14:31:10  aabbccdd  [main]  Tool15                                    [96m   15.0 KB[0m[0m
+[97m 14:31:15  aabbccdd  [main]  Tool16                                    [96m   16.0 KB[0m[0m
+[97m 14:31:20  aabbccdd  [main]  Tool17                                    [96m   17.0 KB[0m[0m
+[97m 14:31:25  aabbccdd  [main]  Tool18                                    [96m   18.0 KB[0m[0m
+[97m 14:31:30  aabbccdd  [main]  Tool19                                    [96m   19.0 KB[0m[0m
+[97m 14:31:35  aabbccdd  [main]  Tool20                                    [96m   20.0 KB[0m[0m
+[97m 14:31:40  aabbccdd  [main]  Tool21                                    [96m   21.0 KB[0m[0m
+[97m 14:31:45  aabbccdd  [main]  Tool22                                    [96m   22.0 KB[0m[0m
+[97m 14:31:50  aabbccdd  [main]  Tool23                                    [96m   23.0 KB[0m[0m
+[97m 14:31:55  aabbccdd  [main]  Tool24                                    [96m   24.0 KB[0m[0m
+[97m 14:32:00  aabbccdd  [main]  Tool25                                    [96m   25.0 KB[0m[0m
+[97m 14:32:05  aabbccdd  [main]  Tool26                                    [96m   26.0 KB[0m[0m
+[97m 14:32:10  aabbccdd  [main]  Tool27                                    [96m   27.0 KB[0m[0m
+[97m 14:32:15  aabbccdd  [main]  Tool28                                    [96m   28.0 KB[0m[0m
+[97m 14:32:20  aabbccdd  [main]  Tool29                                    [96m   29.0 KB[0m[0m
+[97m 14:32:25  aabbccdd  [main]  Tool30                                    [96m   30.0 KB[0m[0m
+[97m 14:32:30  aabbccdd  [main]  Tool31                                    [96m   31.0 KB[0m[0m
+[97m 14:32:35  aabbccdd  [main]  Tool32                                    [96m   32.0 KB[0m[0m
+[97m 14:32:40  aabbccdd  [main]  Tool33                                    [96m   33.0 KB[0m[0m
+[97m 14:32:45  aabbccdd  [main]  Tool34                                    [96m   34.0 KB[0m[0m
+[97m 14:32:50  aabbccdd  [main]  Tool35                                    [96m   35.0 KB[0m[0m
+[97m 14:32:55  aabbccdd  [main]  Tool36                                    [96m   36.0 KB[0m[0m
+[90m────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[0m
+[90m q quit    tab window    s sub    e errors    ↑↓/jk scroll    g/G top/bot    36/50[0m
