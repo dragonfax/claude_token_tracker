@@ -44,7 +44,11 @@ func formatEntry(e appdb.TailEntry, showSub bool) string {
 	line := fmt.Sprintf(" %s  %s  %s  %-40s  %s",
 		ts, sess, tag, truncate(e.ToolName, 40), bytesStr)
 
-	return lineStyle.Render(line)
+	rendered := lineStyle.Render(line)
+	if e.InputSummary != "" {
+		rendered += "\n" + styleDim.Render(fmt.Sprintf("                              %s", truncate(e.InputSummary, 80)))
+	}
+	return rendered
 }
 
 func truncate(s string, max int) string {

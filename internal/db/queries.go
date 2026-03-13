@@ -13,6 +13,7 @@ type ToolCall struct {
 	AgentID       string // empty string = main context
 	ToolUseID     string
 	ToolName      string
+	InputSummary  string
 	ResponseBytes int64
 	IsMainContext bool
 }
@@ -29,10 +30,10 @@ type AppError struct {
 
 // AggregateRow is one row of the stats view.
 type AggregateRow struct {
-	ToolName      string
-	Calls         int64
-	TotalBytes    int64
-	AvgBytes      int64
+	ToolName   string
+	Calls      int64
+	TotalBytes int64
+	AvgBytes   int64
 }
 
 func InsertToolCall(db *sql.DB, tc ToolCall) error {
@@ -44,9 +45,13 @@ func InsertToolCall(db *sql.DB, tc ToolCall) error {
 	if tc.AgentID != "" {
 		agentID = tc.AgentID
 	}
+	var inputSummary interface{}
+	if tc.InputSummary != "" {
+		inputSummary = tc.InputSummary
+	}
 	_, err := db.Exec(
-		`INSERT INTO tool_calls (recorded_at, session_id, agent_id, tool_use_id, tool_name, response_bytes, is_main_context)
-		 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+		`INSERT INTO tool_calls (recorded_at, session_id, agent_id, tool_use_id, tool_name, response_bytes, is_main_context, input_summary)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 		tc.RecordedAt.UTC().Format(time.RFC3339Nano),
 		tc.SessionID,
 		agentID,
@@ -54,6 +59,7 @@ func InsertToolCall(db *sql.DB, tc ToolCall) error {
 		tc.ToolName,
 		tc.ResponseBytes,
 		isMain,
+		inputSummary,
 	)
 	return err
 }
@@ -88,6 +94,7 @@ type TailEntry struct {
 	SessionID     string
 	AgentID       string
 	ToolName      string
+	InputSummary  string
 	ResponseBytes int64
 	IsMainContext bool
 	// error fields
@@ -110,7 +117,7 @@ func TailSince(db *sql.DB, afterID, afterErrID int64, showSub bool, since time.T
 	sinceStr := since.UTC().Format(time.RFC3339Nano)
 
 	rows, err := db.Query(
-		`SELECT id, recorded_at, session_id, COALESCE(agent_id,''), tool_name, response_bytes, is_main_context
+		`SELECT id, recorded_at, session_id, COALESCE(agent_id,''), tool_name, COALESCE(input_summary,''), response_bytes, is_main_context
 		 FROM tool_calls
 		 WHERE id > ? AND recorded_at >= ? `+subFilter+`
 		 ORDER BY recorded_at ASC, id ASC`,
@@ -124,7 +131,7 @@ func TailSince(db *sql.DB, afterID, afterErrID int64, showSub bool, since time.T
 		var e TailEntry
 		var recStr string
 		var isMain int
-		if err := rows.Scan(&e.ID, &recStr, &e.SessionID, &e.AgentID, &e.ToolName, &e.ResponseBytes, &isMain); err != nil {
+		if err := rows.Scan(&e.ID, &recStr, &e.SessionID, &e.AgentID, &e.ToolName, &e.InputSummary, &e.ResponseBytes, &isMain); err != nil {
 			return nil, err
 		}
 		e.RecordedAt, _ = time.Parse(time.RFC3339Nano, recStr)

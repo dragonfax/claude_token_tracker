@@ -73,6 +73,7 @@ func runRecord() {
 		AgentID:       call.AgentID,
 		ToolUseID:     call.ToolUseID,
 		ToolName:      call.ToolName,
+		InputSummary:  call.InputSummary,
 		ResponseBytes: call.ResponseBytes,
 		IsMainContext: call.IsMainContext,
 	})

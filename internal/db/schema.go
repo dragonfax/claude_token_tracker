@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS tool_calls (
 	tool_use_id      TEXT NOT NULL,
 	tool_name        TEXT NOT NULL,
 	response_bytes   INTEGER NOT NULL,
-	is_main_context  INTEGER NOT NULL
+	is_main_context  INTEGER NOT NULL,
+	input_summary    TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_tool_calls_recorded_at ON tool_calls(recorded_at);
@@ -32,6 +33,11 @@ CREATE TABLE IF NOT EXISTS errors (
 	message      TEXT NOT NULL,
 	raw_input    TEXT
 );
+`
+
+// migration adds columns to existing databases that pre-date this schema.
+const migration = `
+ALTER TABLE tool_calls ADD COLUMN input_summary TEXT;
 `
 
 func DefaultDBPath() (string, error) {
@@ -58,6 +64,10 @@ func Open(path string) (*sql.DB, error) {
 		db.Close()
 		return nil, fmt.Errorf("apply schema: %w", err)
 	}
+
+	// Best-effort migration: add input_summary column to existing databases.
+	// SQLite returns an error if the column already exists; we ignore it.
+	db.Exec(migration) //nolint:errcheck
 
 	return db, nil
 }
