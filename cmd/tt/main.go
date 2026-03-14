@@ -32,6 +32,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, "tt install-hook: %v\n", err)
 			os.Exit(1)
 		}
+	case "uninstall-hook":
+		if err := runUninstallHook(); err != nil {
+			fmt.Fprintf(os.Stderr, "tt uninstall-hook: %v\n", err)
+			os.Exit(1)
+		}
 	default:
 		fmt.Fprintf(os.Stderr, "unknown command: %s\n", os.Args[1])
 		printUsage()
@@ -45,7 +50,8 @@ func printUsage() {
 	fmt.Fprintln(os.Stderr, "  watch        live tail of tool calls")
 	fmt.Fprintln(os.Stderr, "  log          historical log view")
 	fmt.Fprintln(os.Stderr, "  stats        aggregate stats by tool")
-	fmt.Fprintln(os.Stderr, "  install-hook add PostToolUse hook to ~/.claude/settings.json")
+	fmt.Fprintln(os.Stderr, "  install-hook   add PostToolUse hook to ~/.claude/settings.json")
+	fmt.Fprintln(os.Stderr, "  uninstall-hook remove PostToolUse hook from ~/.claude/settings.json")
 }
 
 func runInstallHook() error {
@@ -131,6 +137,98 @@ func runInstallHook() error {
 
 	fmt.Printf("tt: hook installed — %s record\n", execPath)
 	fmt.Println("tt: PostToolUse hook added to ~/.claude/settings.json")
+	return nil
+}
+
+func runUninstallHook() error {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("get home dir: %w", err)
+	}
+
+	settingsPath := filepath.Join(home, ".claude", "settings.json")
+
+	data, err := os.ReadFile(settingsPath)
+	if os.IsNotExist(err) {
+		fmt.Println("tt: no ~/.claude/settings.json found — nothing to remove")
+		return nil
+	}
+	if err != nil {
+		return fmt.Errorf("read settings: %w", err)
+	}
+
+	var settings map[string]any
+	if err := json.Unmarshal(data, &settings); err != nil {
+		return fmt.Errorf("parse settings.json: %w", err)
+	}
+
+	hooks, _ := settings["hooks"].(map[string]any)
+	if hooks == nil {
+		fmt.Println("tt: no hooks found in ~/.claude/settings.json — nothing to remove")
+		return nil
+	}
+
+	existing, _ := hooks["PostToolUse"].([]any)
+	if len(existing) == 0 {
+		fmt.Println("tt: no PostToolUse hooks found — nothing to remove")
+		return nil
+	}
+
+	// Filter out any hook entries that contain a tt record command
+	var kept []any
+	removed := 0
+	for _, entry := range existing {
+		m, ok := entry.(map[string]any)
+		if !ok {
+			kept = append(kept, entry)
+			continue
+		}
+		innerHooks, _ := m["hooks"].([]any)
+		isTT := false
+		for _, ih := range innerHooks {
+			ihm, ok := ih.(map[string]any)
+			if !ok {
+				continue
+			}
+			cmd, _ := ihm["command"].(string)
+			// Match any variant: "tt record", "/path/to/tt record"
+			if len(cmd) >= len("tt record") && cmd[len(cmd)-len("tt record"):] == "tt record" {
+				isTT = true
+				break
+			}
+		}
+		if isTT {
+			removed++
+		} else {
+			kept = append(kept, entry)
+		}
+	}
+
+	if removed == 0 {
+		fmt.Println("tt: no tt hook entries found — nothing to remove")
+		return nil
+	}
+
+	if len(kept) == 0 {
+		delete(hooks, "PostToolUse")
+	} else {
+		hooks["PostToolUse"] = kept
+	}
+	if len(hooks) == 0 {
+		delete(settings, "hooks")
+	} else {
+		settings["hooks"] = hooks
+	}
+
+	out, err := json.MarshalIndent(settings, "", "  ")
+	if err != nil {
+		return fmt.Errorf("marshal settings: %w", err)
+	}
+	if err := os.WriteFile(settingsPath, append(out, '\n'), 0o644); err != nil {
+		return fmt.Errorf("write settings.json: %w", err)
+	}
+
+	fmt.Printf("tt: removed %d hook entry(s) from ~/.claude/settings.json\n", removed)
 	return nil
 }
 
