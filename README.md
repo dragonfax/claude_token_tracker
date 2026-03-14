@@ -37,6 +37,24 @@ Claude Code's `PostToolUse` hook fires after every tool call. `tt record` is inv
 - **Subagent calls** — tool calls made inside a subagent (tracked but de-emphasized, since those responses are summarized before reaching the main context)
 - **Agent tool calls** — when the main agent invokes a subagent, the subagent's final output is what enters the main context, and that is recorded as a main context call
 
+## Uninstall
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dragonfax/claude_token_tracker/main/uninstall.sh | sh
+```
+
+Removes the PostToolUse hook from `~/.claude/settings.json` and deletes the `tt` binary from `~/.local/bin`. The database at `~/.claude/token_tracker/token_tracker.db` is left in place — remove it manually if desired:
+
+```sh
+rm -rf ~/.claude/token_tracker
+```
+
+You can also remove just the hook without uninstalling the binary:
+
+```sh
+tt uninstall-hook
+```
+
 ## Commands
 
 ```bash
@@ -44,6 +62,8 @@ tt record   # called by the PostToolUse hook — do not run manually
 tt watch    # live feed of tool calls across all sessions
 tt log      # scrollable historical log with filtering
 tt stats    # aggregate stats by tool name (main context only)
+tt install-hook   # add PostToolUse hook to ~/.claude/settings.json
+tt uninstall-hook # remove PostToolUse hook from ~/.claude/settings.json
 ```
 
 ### tt watch
