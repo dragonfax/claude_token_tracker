@@ -110,7 +110,7 @@ func (m statsModel) View() string {
 			truncate(r.ToolName, 42),
 			r.Calls,
 			formatBytes(r.TotalBytes),
-			formatBytes(r.AvgBytes),
+			formatBytes(int64(r.AvgBytes)),
 		)
 		sb.WriteString(styleMain.Render(line) + "\n")
 	}

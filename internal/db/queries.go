@@ -34,7 +34,7 @@ type AggregateRow struct {
 	ToolName   string
 	Calls      int64
 	TotalBytes int64
-	AvgBytes   int64
+	AvgBytes   float64
 }
 
 func InsertToolCall(db *sql.DB, tc ToolCall) error {
