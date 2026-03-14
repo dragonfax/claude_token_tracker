@@ -10,15 +10,7 @@ curl -fsSL https://raw.githubusercontent.com/dragonfax/claude_token_tracker/main
 
 Downloads the pre-built binary for your platform to `~/.local/bin/tt` and automatically adds the PostToolUse hook to `~/.claude/settings.json`. No further configuration needed.
 
-### Option 2 — Claude plugin
-
-```
-/plugin install https://github.com/dragonfax/claude_token_tracker/tree/main/plugin
-```
-
-The plugin auto-configures the PostToolUse hook when enabled. You still need the `tt` binary installed separately (use Option 1 or Option 3).
-
-### Option 3 — Go install (for contributors)
+### Option 2 — Go install (for contributors)
 
 ```bash
 go install github.com/reshophq/token-tracker/cmd/tt@latest

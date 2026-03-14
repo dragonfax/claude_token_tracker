@@ -4,7 +4,7 @@
 
 ## Quick Install
 
-**Option 1 — curl one-liner** (installs binary + configures hook automatically):
+**Option 1 — curl one-liner** (recommended — installs binary and configures hook):
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/dragonfax/claude_token_tracker/main/install.sh | sh
@@ -12,19 +12,11 @@ curl -fsSL https://raw.githubusercontent.com/dragonfax/claude_token_tracker/main
 
 Installs `tt` to `~/.local/bin/tt` and adds the PostToolUse hook to `~/.claude/settings.json`.
 
-**Option 2 — Claude plugin** (hook wired automatically when plugin is enabled):
-
-```
-/plugin install https://github.com/dragonfax/claude_token_tracker/tree/main/plugin
-```
-
-The plugin configures the PostToolUse hook. You still need the `tt` binary (install via Option 1 or `go install`).
-
-**Option 3 — Go install** (for contributors):
+**Option 2 — Go install** (for contributors or manual setups):
 
 ```sh
 go install github.com/reshophq/token-tracker/cmd/tt@latest
-tt install-hook   # adds the hook to ~/.claude/settings.json
+tt install-hook   # adds the PostToolUse hook to ~/.claude/settings.json
 ```
 
 See [docs/configuration.md](docs/configuration.md) for full setup details.
@@ -58,10 +50,10 @@ tt uninstall-hook
 ## Commands
 
 ```bash
-tt record   # called by the PostToolUse hook — do not run manually
-tt watch    # live feed of tool calls across all sessions
-tt log      # scrollable historical log with filtering
-tt stats    # aggregate stats by tool name (main context only)
+tt record         # called by the PostToolUse hook — do not run manually
+tt watch          # live feed of tool calls across all sessions
+tt log            # scrollable historical log with filtering
+tt stats          # aggregate stats by tool name (main context only)
 tt install-hook   # add PostToolUse hook to ~/.claude/settings.json
 tt uninstall-hook # remove PostToolUse hook from ~/.claude/settings.json
 ```

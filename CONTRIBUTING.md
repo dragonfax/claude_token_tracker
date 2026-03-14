@@ -29,16 +29,6 @@ The TUI package uses golden-file snapshot tests in `internal/tui/testdata/`. If 
 UPDATE_SNAPSHOTS=true go test ./internal/tui/...
 ```
 
-## Running the plugin locally
-
-To test the plugin without publishing it, point Claude Code at the local `plugin/` directory:
-
-```sh
-claude --plugin-dir ./plugin
-```
-
-The plugin wires up the PostToolUse hook automatically. You still need the `tt` binary on your PATH (or at `~/.local/bin/tt`).
-
 ## Running the hook locally
 
 To test `tt record` end-to-end without a live Claude session, pipe a sample PostToolUse payload directly:
@@ -127,7 +117,6 @@ cmd/tt/         CLI entry point and hook install/uninstall logic
 internal/db/    SQLite schema and query helpers
 internal/hook/  PostToolUse JSON parser
 internal/tui/   Bubble Tea TUI views (watch, log, stats)
-plugin/         Claude plugin (hooks.json + record.sh wrapper)
 docs/           Configuration and setup documentation
 install.sh      One-liner install script (downloads release binary)
 uninstall.sh    Reverses install.sh

@@ -1,7 +1,0 @@
-{
-  "name": "token-tracker",
-  "description": "Track Claude Code token usage via PostToolUse hook",
-  "version": "1.0.0",
-  "author": {"name": "Jason Stillwell"},
-  "repository": "https://github.com/dragonfax/claude_token_tracker"
-}
